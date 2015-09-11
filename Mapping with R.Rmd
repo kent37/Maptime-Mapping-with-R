@@ -1,0 +1,289 @@
+---
+title: "Mapping with R"
+author: 
+- "Kent Johnson"
+- "kent@kentsjohnson.com"
+date: '`r Sys.Date()`'
+output: 
+  slidy_presentation:
+    highlight: pygments
+    css: styles.css
+---
+
+```{r parameters, echo=FALSE,include=FALSE,message=FALSE}
+knitr::opts_chunk$set(echo=TRUE,fig.width=8, fig.height=4.5, comment=NA, warning=FALSE, message=FALSE)
+options(width=100)
+```
+
+## Maps in R?
+
+> - __Good__
+> - R has good support for spatial data including shapefiles, GeoJSON, spatial operations
+> - Support for data manipulation, general graphics, statistics
+> - Great reporting capabilities with `knitr` and `rmarkdown`  
+  This presentation was authored in R and markdown
+> - Capable programming language
+> - Use `knitr` and `leaflet` to embed interactive maps in HTML pages
+> - Growing support for interactive HTML reports with no JavaScript coding required!
+
+> - __Not so good__
+> - It's programming :-)
+> - R is a quirky programming language and can take some time to learn
+> - Interactive capabilities are less than what you can do directly in Javascript
+
+## Today's goal
+
+Make a map showing Cambridge properties built since 1980, color-coded by year built.
+
+Data is from the Cambridge Open Data portal (http://data.cambridgema.gov).
+
+> - Assessor's data gives parcel address, year built
+> - Parcel shapefile contains the parcel outlines
+
+## Libraries
+
+```{r}
+library(rgdal)
+library(leaflet)
+```
+
+> - `rgdal` package supports reading and writing shapefiles
+> - `leaflet` package (http://rstudio.github.io/leaflet/) connects to `leaflet.js`
+> - Install with `install.packages(c('rgdal', 'leaflet'))` or the _Packages_ tab in RStudio
+
+## Load the assessor's data
+
+```{r}
+# https://data.cambridgema.gov/Assessing/Assessing-Building-Information/crnm-mw9n
+ass2015 = read.csv('data/Assessing_Building_Information.csv', 
+               stringsAsFactors=FALSE)
+```
+
+> - `read.csv` loads a .csv file into an R data.frame.
+> - `stringsAsFactors=FALSE` prevents conversion of string columns into categorical
+variables.
+
+## Explore assessor's data
+
+```{r}
+nrow(ass2015)
+names(ass2015)
+```
+> - `nrow` shows the number of rows in the table
+> - `names` shows the column names in the table
+> - Notice all special characters in column names have been changed to periods.
+
+## Explore assessor's data
+
+```{r}
+summary(ass2015$Actual.Year.Built)
+head(table(ass2015$Actual.Year.Built), n=50)
+# table(ass2015$Actual.Year.Built)
+```
+> - `summary` gives a simple summary of numerical data
+> - `table` tabulates values in the year built column.
+> - In RStudio: `View(ass2015)` or clicking the variable in _Environment_ gives a sortable, searchable table view
+
+## Filter out old & duplicate properties
+
+```{r}
+ass_new = subset(ass2015, Actual.Year.Built>=1980) 
+ass_new = ass_new[!duplicated(ass_new$GIS.ID),]
+```
+
+> - `subset` selects properties built in 1980 or later
+> - `duplicated` finds entries which have already appeared in a vector
+> - There may be multiple properties on one parcel (e.g. condos)
+> - We just need one property to identify the parcel
+
+## Explore
+```{r fig.width=7, fig.height=3.5}
+table(ass_new$Actual.Year.Built)
+hist(ass_new$Actual.Year.Built)
+```
+
+## Read parcel shapefile
+
+```{r}
+# https://data.cambridgema.gov/Assessing/Parcels-Fiscal-Year-2015/rst6-227j
+parcels2015 = readOGR('data/ASSESSING_ParcelsFY2015.shp', 
+        'ASSESSING_ParcelsFY2015', stringsAsFactors=FALSE)
+
+names(parcels2015)
+# View(parcels2015@data)
+```
+
+> - `readOGR` returns a `SpatialPolygonsDataFrame` which combines the parcel shapes with a data.frame
+> - `parcels2015@data` is the data.frame
+> - `parcels2015@polygons` contains the polygon data.
+
+## Merge
+
+```{r}
+new_parcels = parcels2015[parcels2015$ML %in% ass_new$GIS.ID,]
+new_parcels = merge(new_parcels, ass_new, by.x='ML', by.y='GIS.ID')
+```
+
+> - Subset the parcel data to just the ones we want
+> - Parcel ID is `ML` (map-lot) in the parcel data and `GIS.ID` in the assessor's data.
+> - Use indexing to select (could also use `subset`)
+> - `%in%` creates a boolean vector
+> - Merge property data with parcel shapes to make a single data set
+
+## A simple map
+
+The `plot` method will make a simple map of spatial data.
+
+```{r}
+plot(new_parcels)
+```
+
+## A simple map
+> - It's not much but it verifies that we have reasonable spatial data
+> - We could add color, political boundaries, etc. to make a real map
+> - Slippy maps are more fun!
+
+## Transform to WGS 84 for web mapping
+
+```{r transform}
+new_osm = spTransform(new_parcels, CRS("+init=EPSG:4326"))
+```
+
+> - Cambridge data is in Massachusetts State Plane coordinates
+> - Web maps use WGS 84 _aka_ epsg:4326
+> - If your data doesn't show up, this might be the reason
+
+## First slippy map
+
+The R API to leaflet.js is patterned on the Javascript API.
+
+```{r first_map, results='hide'}
+leaflet() %>% 
+  addTiles() %>% 
+  setView(-71.128184, 42.3769824, zoom = 14) %>% 
+  addPolygons(data=new_osm)
+```
+
+> - `leaflet()` creates the map object
+> - `addTiles()` creates the background tiled layer
+> - `setView()` sets the initial location and zoom
+> - `addPolygons()` adds our data to the map as a polygon overlay
+> - ` %>%` is a pipe operator
+
+## First slippy map
+
+```{r ref.label='first_map', echo=FALSE, results='markup'}
+```
+
+## Change the base layer
+
+Stamen Design's `toner-lite` is a good base map, it stays out of the way.
+
+```{r}
+base_map = leaflet() %>% 
+  addTiles('http://{s}.tile.stamen.com/toner-lite/{z}/{x}/{y}.jpg',
+    attribution = 
+      paste('Map tiles by <a href="http://stamen.com">Stamen Design</a>,',
+      '<a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash;',
+      'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>',
+      'contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">',
+      'CC-BY-SA</a>')) %>% 
+  setView(-71.128184, 42.3769824, zoom = 14) 
+```
+
+> - Save the base map in a variable to reduce repetition later
+> - `addTiles()` takes a URL template
+> - __Many__ tile providers, see http://leaflet-extras.github.io/leaflet-providers/preview/
+> - Include proper attribution!
+
+## Change the base layer
+
+```{r}
+base_map %>% 
+  addPolygons(data=new_osm)
+```
+
+## Color
+
+```{r}
+palette = c('#fed976', '#feb24c', '#fd8d3c', 
+            '#fc4e2a', '#e31a1c', '#bd0026', '#800026')
+
+year_built = new_parcels@data$Actual.Year.Built
+colors = palette[cut(year_built, c(seq(1980, 2010, 5), 2015), 
+                     include.lowest=TRUE, labels=FALSE)]
+```
+
+> - `palette` is the actual colors  
+    From the 9-class YlOrRd ColorBrewer palette  
+    http://colorbrewer2.org/?type=sequential&scheme=YlOrRd&n=9
+> - `colors` is a vector of colors, one per property, selected from `palette`
+> - Use one color per five-year period
+> - `cut` divides the years into ranges
+
+## Color
+
+```{r}
+base_map %>% 
+  addPolygons(data=new_osm, 
+              color='black', fillColor=colors) # Colors
+```
+
+## Popups
+
+- Popups are HTML, build them in R using `apply` and `paste`
+
+```{r}
+# Make popups showing the location and year built.
+popups = apply(new_parcels@data, 1, function(parcel) {
+         paste0('<p>', parcel['Location'], '<br>',
+         'Year: ', parcel['Actual.Year.Built'], '<br></p>')
+         })
+```
+
+> - `apply` performs an operation on each element along one dimension (here, for each row)
+> - `paste0` concatenates strings
+
+## Popups
+
+```{r}
+base_map %>% 
+  addPolygons(data=new_osm, 
+              color='black', fillColor=colors, # Colors
+              popup=unname(popups),            # Popups
+              options=c(pathOptions(), popupOptions(minWidth=100)))
+```
+
+## A little more styling and we're done
+
+See the `leaflet.js` docs for available options.
+
+```{r final, results='hide'}
+base_map %>% 
+  addPolygons(data=new_osm, 
+              color='black', fillColor=colors, # Colors
+              weight=1, dashArray=1,           # Line weight
+              opacity=0.7, fillOpacity=0.5,    # Transparency
+              popup=unname(popups),            # Popups
+              options=c(pathOptions(), popupOptions(minWidth=100)))
+```
+
+## Final map
+
+```{r ref.label='final', echo=FALSE, results='markup'}
+```
+
+## Links
+
+- R home page  
+  https://www.r-project.org/
+- RStudio IDE  
+  https://www.rstudio.com/products/RStudio/
+- `leaflet` package for R  
+  http://rstudio.github.io/leaflet/
+- A more detailed tutorial on spatial analysis and mapping in R  
+  http://robinlovelace.net/r/2014/01/30/spatial-data-with-R-tutorial.html
+- More on static maps  
+  http://www.molecularecologist.com/2012/09/making-maps-with-r/
+
+### Questions?

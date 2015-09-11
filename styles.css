@@ -1,0 +1,16 @@
+pre.sourceCode {
+  border-left-width: thin;
+  background-color: white
+}
+
+code {
+  color: #00428C;
+}
+
+pre {
+    border-left-width: thin;
+    background-color: hsla(220,6%,93%,1);
+}
+pre.sourceCode, code.sourceCode {
+  font-size: 90%;
+}
