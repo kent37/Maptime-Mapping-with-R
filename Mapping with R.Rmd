@@ -15,18 +15,21 @@ knitr::opts_chunk$set(echo=TRUE,fig.width=8, fig.height=4.5, comment=NA, warning
 options(width=100)
 ```
 
-## Maps in R?
+## Maps in R? Why?
 
-> - __Good__
-> - R has good support for spatial data including shapefiles, GeoJSON, spatial operations
+> - R has good support for spatial data including shapefiles, GeoJSON, spatial operations  
+    `rgdal::writeOGR()` writes GeoJSON directly
 > - Support for data manipulation, general graphics, statistics
 > - Great reporting capabilities with `knitr` and `rmarkdown`  
-  This presentation was authored in R and markdown
+  This presentation was authored in R and markdown  
+  A more detailed example: http://kentsj.com/FPRA/TownGown.html
 > - Capable programming language
 > - Use `knitr` and `leaflet` to embed interactive maps in HTML pages
 > - Growing support for interactive HTML reports with no JavaScript coding required!
+> - RStudio is a _great_ programming environment
 
-> - __Not so good__
+## Maps in R? Why not?
+
 > - It's programming :-)
 > - R is a quirky programming language and can take some time to learn
 > - Interactive capabilities are less than what you can do directly in Javascript
@@ -39,6 +42,10 @@ Data is from the Cambridge Open Data portal (http://data.cambridgema.gov).
 
 > - Assessor's data gives parcel address, year built
 > - Parcel shapefile contains the parcel outlines
+
+## RStudio
+
+- Very quick orientation for those following along
 
 ## Libraries
 
