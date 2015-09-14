@@ -188,20 +188,13 @@ Stamen Design's `toner-lite` is a good base map, it stays out of the way.
 
 ```{r}
 base_map = leaflet() %>% 
-  addTiles('http://{s}.tile.stamen.com/toner-lite/{z}/{x}/{y}.jpg',
-    attribution = 
-      paste('Map tiles by <a href="http://stamen.com">Stamen Design</a>,',
-      '<a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash;',
-      'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>',
-      'contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">',
-      'CC-BY-SA</a>')) %>% 
+  addProviderTiles('Stamen.TonerLite') %>% 
   setView(-71.128184, 42.3769824, zoom = 14) 
 ```
 
 > - Save the base map in a variable to reduce repetition later
-> - `addTiles()` takes a URL template
+> - `addProviderTiles()` takes the name of a provider
 > - __Many__ tile providers, see http://leaflet-extras.github.io/leaflet-providers/preview/
-> - Include proper attribution!
 
 ## Change the base layer
 
