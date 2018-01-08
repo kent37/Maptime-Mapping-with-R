@@ -1,0 +1,78 @@
+---
+title: "SeeClickFix Explorer"
+subtitle: "Tracking tree planting requests"
+author: "Kent Johnson"
+date: "2018/01/17"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+---
+
+```{r setup, include=FALSE}
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
+```
+
+# Who am I?
+
+### Software developer <i class='fa fa-laptop'></i> / Data geek <i class='fa fa-database'></i> / Amateur mapper <i class='fa fa-map-o'></i>
+
+### I love maps and data <i class='fa fa-heart-o'></i>
+
+### [kentsjohnson.com](http://kentsjohnson.com)
+
+---
+
+# Tree planting requests <i class='fa fa-tree'></i>
+
+Jan Devereux asked me if there was a way to track tree planting 
+requests...
+
+--
+
+Maybe the City has a work-order tracking system?
+
+--
+
+What about SeeClickFix?
+
+---
+
+## [SeeClickFix](https://seeclickfix.com/cambridge) allows citizens to request services and report problems.
+
+### Several categories are tree-related:
+
+- Tree planting request `r emo::ji("evergreen_tree")`
+- Tree pruning request `r emo::ji("deciduous_tree")`
+- Tree removal request `r emo::ji("palm_tree")`
+
+Note: SeeClickFix is also known as Commonwealth Connect.
+
+---
+
+![Cambridge Open Data Portal](https://data.cambridgema.gov/api/assets/99041562-1FF2-44E3-9A6F-76A58AA3AE77)
+
+### SeeClickFix [data](https://data.cambridgema.gov/Public-Works/Commonwealth-Connect-Service-Requests/2z9k-mv9g) is available from the [Cambridge Open Data Portal](http://www.cambridgema.gov/departments/opendata).
+
+- Freely accessible via web-browser or API (a program can read the data)
+- Updated regularly
+
+---
+
+# First attempt
+
+## A [static report](http://kentsj.com/FPRA/Tree_planting_requests.html) of tree planting requests
+
+- From downloaded data
+- No automatic update <i class='fa fa-long-arrow-right'></i> Stale data
+- No other categories
+
+---
+
+# Second attempt
+
+## [SeeClickFix Explorer](http://kentsj.com/FPRA/SeeClickFix.html)
+
+- Shows all categories
+- Pulls live data from Cambridge Open Data portal on request <i class='fa fa-long-arrow-right'></i> No stale data! `r emo::ji("tada")`
+- Hosted on my web site
+- Built with [R](https://www.r-project.org/) and [Shiny](https://shiny.rstudio.com/)

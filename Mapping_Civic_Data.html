@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mapping Open Data for Civic Activism</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Kent Johnson" />
+    <link href="libs/remark-css-0.0.1/example.css" rel="stylesheet" />
+    <link href="libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Mapping Open Data for Civic Activism
+## How can open data inform local politics?
+### Kent Johnson
+### 2018/01/17
+
+---
+
+
+
+
+# Who am I?
+
+### Software developer &lt;i class='fa fa-laptop'&gt;&lt;/i&gt; / Data geek &lt;i class='fa fa-database'&gt;&lt;/i&gt; / Amateur mapper &lt;i class='fa fa-map-o'&gt;&lt;/i&gt;
+
+### I love maps and data &lt;i class='fa fa-heart-o'&gt;&lt;/i&gt;
+
+### [kentsjohnson.com](http://kentsjohnson.com)
+
+### http://kentsj.com/Preso/Mapping_Civic_Data.html
+---
+
+# Who is voting for &amp;lt;my candidate&gt; ? 🗳
+
+### My first slippy map, for Somerville Alderman elections, 2013
+
+Map of canvassing data
+👣 using Leaflet.js.
+Shows location of supporters, non-supporters, not reached, etc.
+
+Non-public data, sorry! 🤦‍♂️
+
+![Canvassing map](CanvasMap.tiff)
+---
+
+# Cambridge Open Data portal launch 🚀
+
+### 2015 - We have data...
+
+Jan Devereux (FPRA president, now City Councilor) suggested that FPRA might need a “data person”. I volunteered. 😃
+
+Coincidentally, &lt;img src="http://leafletjs.com/docs/images/logo.png" alt="Leaflet logo" style="height: 25px;"/&gt; for R was released around the same time. 
+
+### ⛈️ ⚡ A perfect storm ⚡ ⛈️
+
+---
+
+# Let's explore! 🔎
+
+---
+
+# Who owns Cambridge?
+
+## 🏛 Institutional ownership of Cambridge property
+
+- Based on assessor's data and parcel map (the first of many)
+- Each parcel links to assessor's property page
+
+### Issues
+
+- Spelling - At least __7__ ways to spell  
+  __`PRESIDENT &amp; FELLOWS OF HARVARD COLLEGE`__
+- Linking to property page via map-lot was problematic
+- City staff were _very_ helpful with
+  - understanding mysterious codes
+  - updating the [Property Database](http://www.cambridgema.gov/propertydatabase/) website to support map-lot links
+
+### [Town/Gown Map](http://kentsj.com/FPRA/TownGown.html)
+
+---
+
+# Where are the most valuable residential properties?
+
+### An exploration of property values 💰
+
+### [Top 100 Residential Properties map](http://kentsj.com/FPRA/Top100Residential.html)
+
+- Updated for 2018 data, preserving the (crude) style
+- Most field names changed from 2015 to 2018 🙁
+
+---
+
+# Seriously, now... 🤔
+
+---
+
+# Where is Cambridge Affordable Housing?
+
+### An attempt to map all affordable housing in Cambridge
+
+### Ultimately a failure 🤷‍♀️
+
+- Many, many owners 👴🏼 👴🏿 👨🏽 👨🏾‍⚕️ 👨🏽 👨‍🎓 👨🏻‍⚕️ 👴🏿 👴🏻 👨🏻‍⚕️
+- No centralized data source
+- What counts as affordable, anyway?
+
+### [Affordable Housing Map](http://kentsj.com/FPRA/AffordableHousing2.html)
+
+---
+
+# Who can create Accessory Housing? 🏘️
+
+### Combridge 2015 accessory housing ordinance was very restrictive.
+
+### Limitations on lot size, building size, zone, etc.
+
+#### How many properties might qualify for an accessory unit?
+
+#### How could changes in the ordinance increase availability?
+
+[Interactive application](http://kentsj.com/FPRA/AccessoryHousing.html)
+made with [R](http://r-project.org) and [Shiny](http://shiny.rstudio.com) allows
+exploration of eligible properties as the limitations
+are changed.
+
+Resulted in a change to the Cambridge zoning ordinance! 🎉
+
+---
+
+# Where are non-conforming lots?
+
+### OK, where are lots with less than 20' frontage? 📐
+
+### Creating [this map](http://kentsj.com/FPRA/SmallFrontage.html) required extensive geospatial processing.
+
+- Buffer roads and sidewalks
+- Split parcels into segments
+- Segments fully in the buffer are frontage segments
+
+#### [Cambridge GIS](http://gis.cambridgema.gov) has _many_ useful datasets, yay!
+
+---
+
+# How will the Cambridge Lighting Ordinance affect me?
+
+### Changes proposed to allowable outdoor lighting 💡 🚨 🏮
+
+### Who is affected?
+
+[Map](http://kentsj.com/LZ/ProposedLightingZones.html) based on existing zoning and proposed changes was used as part of a
+campaign for a stronger ordinance.
+
+Simple geospatial analysis to find areas of the zones and length of the border between zones.
+
+---
+
+# Who is building in the Alewife area?
+
+### The Alewife region has been extensively developed in the past ten years 🏘 🏢 🏨
+
+### There is no end in sight.
+
+[Alewife Development Map](http://kentsj.com/FPRA/Alewife_Projects.html) combines
+
+- curated development information
+- parcel map
+- overlays for flood plain, tree cover, parking
+
+to shine light on development in this sensitive area.
+
+---
+
+# Where is Alewife tax revenue? 💵
+
+### Alewife development has not caused a similar increase in revenue.
+
+### Why not?
+
+#### [Tax Revenue Report](http://kentsj.com/FPRA/AlewifeTaxRevenue.html) shows increase in valuation and taxes over six years.
+
+Acquiring data for six years was difficult:
+
+- Changing data format - different data, different names
+- Missing data - residential exemption was supplied separately or not at all
+- Mangled data - data in the wrong columns required detective work and fixup
+- Auxiliary data - historical tax rates
+
+---
+
+# Where are SeeClickFix requests? 🔧
+
+### [SeeClickFix](https://seeclickfix.com/cambridge) allows citizens to request services and report problems.
+
+#### Original goal was to track tree planting requests. 🌳
+
+#### Result is an [interactive app](http://kentsj.com/FPRA/SeeClickFix.html) showing stats on open and closed requests, and the location of open requests.
+
+Data is pulled from the Open Data Portal as needed using the Socrata API.
+
+---
+
+# Do you want more?
+
+### Really? 
+
+### OK 😁
+
+#### [Cambridge Street Trees](http://kentsj.com/FPRA/Cambridge_Street_Trees.html)
+
+#### [Cambridge Development Projects](http://kentsj.com/FPRA/Cambridge_Development_Projects.html)
+
+#### [Building Permits](http://kentsj.com/FPRA/Building_Permits_2015-2017.html)
+
+#### [Board of Zoning Appeals Requests](http://kentsj.com/FPRA/Board_of_Zoning_Appeal_Requests_CT.html)
+
+---
+
+# ❓Questions❓
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});
+(function() {var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler"); if (!r) return; s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }"; d.head.appendChild(s);})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,211 @@
+---
+title: "Mapping Open Data for Civic Activism"
+subtitle: "How can open data inform local politics?"
+author: "Kent Johnson"
+date: "2018/01/17"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+---
+
+```{r setup, include=FALSE}
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
+```
+
+# Who am I?
+
+### Software developer <i class='fa fa-laptop'></i> / Data geek <i class='fa fa-database'></i> / Amateur mapper <i class='fa fa-map-o'></i>
+
+### I love maps and data <i class='fa fa-heart-o'></i>
+
+### [kentsjohnson.com](http://kentsjohnson.com)
+
+### http://kentsj.com/Preso/Mapping_Civic_Data.html
+---
+
+# Who is voting for &lt;my candidate> ? 🗳
+
+### My first slippy map, for Somerville Alderman elections, 2013
+
+Map of canvassing data
+`r emo::ji("footprints")` using Leaflet.js.
+Shows location of supporters, non-supporters, not reached, etc.
+
+Non-public data, sorry! `r emo::ji("man_facepalming")`
+
+![Canvassing map](CanvasMap.tiff)
+---
+
+# Cambridge Open Data portal launch `r emo::ji("rocket")`
+
+### 2015 - We have data...
+
+Jan Devereux (FPRA president, now City Councilor) suggested that FPRA might need a “data person”. I volunteered. `r emo::ji("smiley")`
+
+Coincidentally, <img src="http://leafletjs.com/docs/images/logo.png" alt="Leaflet logo" style="height: 25px;"/> for R was released around the same time. 
+
+### `r emo::ji("cloud_with_lightning_and_rain")` `r emo::ji("zap")` A perfect storm `r emo::ji("zap")` `r emo::ji("cloud_with_lightning_and_rain")`
+
+---
+
+# Let's explore! `r emo::ji("mag_right")`
+
+---
+
+# Who owns Cambridge?
+
+## 🏛 Institutional ownership of Cambridge property
+
+- Based on assessor's data and parcel map (the first of many)
+- Each parcel links to assessor's property page
+
+### Issues
+
+- Spelling - At least __7__ ways to spell  
+  __`PRESIDENT & FELLOWS OF HARVARD COLLEGE`__
+- Linking to property page via map-lot was problematic
+- City staff were _very_ helpful with
+  - understanding mysterious codes
+  - updating the [Property Database](http://www.cambridgema.gov/propertydatabase/) website to support map-lot links
+
+### [Town/Gown Map](http://kentsj.com/FPRA/TownGown.html)
+
+---
+
+# Where are the most valuable residential properties?
+
+### An exploration of property values 💰
+
+### [Top 100 Residential Properties map](http://kentsj.com/FPRA/Top100Residential.html)
+
+- Updated for 2018 data, preserving the (crude) style
+- Most field names changed from 2015 to 2018 `r emo::ji("slightly_frowning_face")`
+
+---
+
+# Seriously, now... `r emo::ji("thinking")`
+
+---
+
+# Where is Cambridge Affordable Housing?
+
+### An attempt to map all affordable housing in Cambridge
+
+### Ultimately a failure `r emo::ji("woman_shrugging")`
+
+- Many, many owners `r paste(sample(c(emo::ji_set('man')[1:20], emo::ji_set('man')[1:20]), 10), collapse=' ')`
+- No centralized data source
+- What counts as affordable, anyway?
+
+### [Affordable Housing Map](http://kentsj.com/FPRA/AffordableHousing2.html)
+
+---
+
+# Who can create Accessory Housing? `r emo::ji("houses")`
+
+### Combridge 2015 accessory housing ordinance was very restrictive.
+
+### Limitations on lot size, building size, zone, etc.
+
+#### How many properties might qualify for an accessory unit?
+
+#### How could changes in the ordinance increase availability?
+
+[Interactive application](http://kentsj.com/FPRA/AccessoryHousing.html)
+made with [R](http://r-project.org) and [Shiny](http://shiny.rstudio.com) allows
+exploration of eligible properties as the limitations
+are changed.
+
+Resulted in a change to the Cambridge zoning ordinance! `r emo::ji("tada")`
+
+---
+
+# Where are non-conforming lots?
+
+### OK, where are lots with less than 20' frontage? `r emo::ji("triangular_ruler")`
+
+### Creating [this map](http://kentsj.com/FPRA/SmallFrontage.html) required extensive geospatial processing.
+
+- Buffer roads and sidewalks
+- Split parcels into segments
+- Segments fully in the buffer are frontage segments
+
+#### [Cambridge GIS](http://gis.cambridgema.gov) has _many_ useful datasets, yay!
+
+---
+
+# How will the Cambridge Lighting Ordinance affect me?
+
+### Changes proposed to allowable outdoor lighting 💡 🚨 🏮
+
+### Who is affected?
+
+[Map](http://kentsj.com/LZ/ProposedLightingZones.html) based on existing zoning and proposed changes was used as part of a
+campaign for a stronger ordinance.
+
+Simple geospatial analysis to find areas of the zones and length of the border between zones.
+
+---
+
+# Who is building in the Alewife area?
+
+### The Alewife region has been extensively developed in the past ten years 🏘 🏢 🏨
+
+### There is no end in sight.
+
+[Alewife Development Map](http://kentsj.com/FPRA/Alewife_Projects.html) combines
+
+- curated development information
+- parcel map
+- overlays for flood plain, tree cover, parking
+
+to shine light on development in this sensitive area.
+
+---
+
+# Where is Alewife tax revenue? 💵
+
+### Alewife development has not caused a similar increase in revenue.
+
+### Why not?
+
+#### [Tax Revenue Report](http://kentsj.com/FPRA/AlewifeTaxRevenue.html) shows increase in valuation and taxes over six years.
+
+Acquiring data for six years was difficult:
+
+- Changing data format - different data, different names
+- Missing data - residential exemption was supplied separately or not at all
+- Mangled data - data in the wrong columns required detective work and fixup
+- Auxiliary data - historical tax rates
+
+---
+
+# Where are SeeClickFix requests? 🔧
+
+### [SeeClickFix](https://seeclickfix.com/cambridge) allows citizens to request services and report problems.
+
+#### Original goal was to track tree planting requests. 🌳
+
+#### Result is an [interactive app](http://kentsj.com/FPRA/SeeClickFix.html) showing stats on open and closed requests, and the location of open requests.
+
+Data is pulled from the Open Data Portal as needed using the Socrata API.
+
+---
+
+# Do you want more?
+
+### Really? 
+
+### OK 😁
+
+#### [Cambridge Street Trees](http://kentsj.com/FPRA/Cambridge_Street_Trees.html)
+
+#### [Cambridge Development Projects](http://kentsj.com/FPRA/Cambridge_Development_Projects.html)
+
+#### [Building Permits](http://kentsj.com/FPRA/Building_Permits_2015-2017.html)
+
+#### [Board of Zoning Appeals Requests](http://kentsj.com/FPRA/Board_of_Zoning_Appeal_Requests_CT.html)
+
+---
+
+# ❓Questions❓

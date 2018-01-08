@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SeeClickFix Explorer</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Kent Johnson" />
+    <link href="libs/remark-css-0.0.1/example.css" rel="stylesheet" />
+    <link href="libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# SeeClickFix Explorer
+## Tracking tree planting requests
+### Kent Johnson
+### 2018/01/17
+
+---
+
+
+
+
+# Who am I?
+
+### Software developer &lt;i class='fa fa-laptop'&gt;&lt;/i&gt; / Data geek &lt;i class='fa fa-database'&gt;&lt;/i&gt; / Amateur mapper &lt;i class='fa fa-map-o'&gt;&lt;/i&gt;
+
+### I love maps and data &lt;i class='fa fa-heart-o'&gt;&lt;/i&gt;
+
+### [kentsjohnson.com](http://kentsjohnson.com)
+
+---
+
+# Tree planting requests &lt;i class='fa fa-tree'&gt;&lt;/i&gt;
+
+Jan Devereux asked me if there was a way to track tree planting 
+requests...
+
+--
+
+Maybe the City has a work-order tracking system?
+
+--
+
+What about SeeClickFix?
+
+---
+
+## [SeeClickFix](https://seeclickfix.com/cambridge) allows citizens to request services and report problems.
+
+### Several categories are tree-related:
+
+- Tree planting request 🌲
+- Tree pruning request 🌳
+- Tree removal request 🌴
+
+Note: SeeClickFix is also known as Commonwealth Connect.
+
+---
+
+![Cambridge Open Data Portal](https://data.cambridgema.gov/api/assets/99041562-1FF2-44E3-9A6F-76A58AA3AE77)
+
+### SeeClickFix [data](https://data.cambridgema.gov/Public-Works/Commonwealth-Connect-Service-Requests/2z9k-mv9g) is available from the [Cambridge Open Data Portal](http://www.cambridgema.gov/departments/opendata).
+
+- Freely accessible via web-browser or API (a program can read the data)
+- Updated regularly
+
+---
+
+# First attempt
+
+## A [static report](http://kentsj.com/FPRA/Tree_planting_requests.html) of tree planting requests
+
+- From downloaded data
+- No automatic update &lt;i class='fa fa-long-arrow-right'&gt;&lt;/i&gt; Stale data
+- No other categories
+
+---
+
+# Second attempt
+
+## [SeeClickFix Explorer](http://kentsj.com/FPRA/SeeClickFix.html)
+
+- Shows all categories
+- Pulls live data from Cambridge Open Data portal on request &lt;i class='fa fa-long-arrow-right'&gt;&lt;/i&gt; No stale data! 🎉
+- Hosted on my web site
+- Built with [R](https://www.r-project.org/) and [Shiny](https://shiny.rstudio.com/)
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});
+(function() {var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler"); if (!r) return; s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }"; d.head.appendChild(s);})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
