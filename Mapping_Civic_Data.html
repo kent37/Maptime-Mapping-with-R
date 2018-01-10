@@ -30,6 +30,9 @@ class: center, middle, inverse, title-slide
 ### [kentsjohnson.com](http://kentsjohnson.com)
 
 ### http://kentsj.com/Preso/Mapping_Civic_Data.html
+
+???
+Slippy maps are a great way to explore detailed geographic data.
 ---
 
 # Who is voting for &amp;lt;my candidate&gt; ? 🗳
@@ -49,15 +52,28 @@ Non-public data, sorry! 🤦‍♂️
 
 ### 2015 - We have data...
 
-Jan Devereux (FPRA president, now City Councilor) suggested that FPRA might need a “data person”. I volunteered. 😃
+Jan Devereux (FPRA president, now City Councilor) suggested that FPRA might need a “data person”. I volunteered. 🙌
 
-Coincidentally, &lt;img src="http://leafletjs.com/docs/images/logo.png" alt="Leaflet logo" style="height: 25px;"/&gt; for R was released around the same time. 
+Coincidentally, [Leaflet for R](http://rstudio.github.io/leaflet/) was released around the same time. 
 
-### ⛈️ ⚡ A perfect storm ⚡ ⛈️
+.center[![Cambridge Open Data Portal](https://data.cambridgema.gov/api/assets/99041562-1FF2-44E3-9A6F-76A58AA3AE77)]
 
+.center[&lt;img src="http://leafletjs.com/docs/images/logo.png" alt="Leaflet.js logo" style="height: 80px;"/&gt;]
+
+### .center[⛈️ ⚡ A perfect storm ⚡ ⛈️]
+
+???
+FPRA is ?  
+Ask who is familiar with Leaflet.   
+Ask who is a programmer.  
+What is R?  
 ---
 
 # Let's explore! 🔎
+
+--
+
+&lt;h3&gt;How about some exploratory maps?&lt;/h3&gt;
 
 ---
 
@@ -94,6 +110,13 @@ Coincidentally, &lt;img src="http://leafletjs.com/docs/images/logo.png" alt="Lea
 
 # Seriously, now... 🤔
 
+--
+
+&lt;h3&gt;It helps to have interesting questions.&lt;/h3&gt;
+
+???
+
+Many of the following started with an email with the subject "Quick Question"
 ---
 
 # Where is Cambridge Affordable Housing?
@@ -102,12 +125,13 @@ Coincidentally, &lt;img src="http://leafletjs.com/docs/images/logo.png" alt="Lea
 
 ### Ultimately a failure 🤷‍♀️
 
-- Many, many owners 👴🏼 👴🏿 👨🏽 👨🏾‍⚕️ 👨🏽 👨‍🎓 👨🏻‍⚕️ 👴🏿 👴🏻 👨🏻‍⚕️
+- Many, many owners 👨🏿 👨🏽 👨‍⚕️ 👨🏼‍⚕️ 👴🏾 👨🏿 👨‍🎓 👴🏿 👴🏿 👨🏻
 - No centralized data source
 - What counts as affordable, anyway?
 
 ### [Affordable Housing Map](http://kentsj.com/FPRA/AffordableHousing2.html)
 
+??? Note Stamen toner.lite base map
 ---
 
 # Who can create Accessory Housing? 🏘️
@@ -131,13 +155,17 @@ Resulted in a change to the Cambridge zoning ordinance! 🎉
 
 # Where are non-conforming lots?
 
-### OK, where are lots with less than 20' frontage? 📐
+### OK, where are lots with less than 20' frontage?
 
-### Creating [this map](http://kentsj.com/FPRA/SmallFrontage.html) required extensive geospatial processing.
+### .center[Twenty feet &lt;i class='fa fa-long-arrow-right'&gt;&lt;/i&gt;👣👣👣👣👣👣👣👣👣👣]
+
+### Answering this required extensive geospatial processing.
 
 - Buffer roads and sidewalks
 - Split parcels into segments
 - Segments fully in the buffer are frontage segments
+
+The [map](http://kentsj.com/FPRA/SmallFrontage.html) itself is mostly confirmatory.
 
 #### [Cambridge GIS](http://gis.cambridgema.gov) has _many_ useful datasets, yay!
 
@@ -158,34 +186,36 @@ Simple geospatial analysis to find areas of the zones and length of the border b
 
 # Who is building in the Alewife area?
 
-### The Alewife region has been extensively developed in the past ten years 🏘 🏢 🏨
+### Alewife development has soared in the past ten years .
 
-### There is no end in sight.
+### 🏘 🏢 🏨 🏘 🏢 🏨 🏘 🏢 🏨 🏘 🏢 🏨 🏘 🏢 🏨
+
+### There is no end in sight. &amp;nbsp; &lt;i class='fa fa-binoculars'&gt;&lt;/i&gt;
 
 [Alewife Development Map](http://kentsj.com/FPRA/Alewife_Projects.html) combines
 
 - curated development information
 - parcel map
-- overlays for flood plain, tree cover, parking
+- overlays for tree cover, parking, flood plain (please can we have open raster data?)
 
 to shine light on development in this sensitive area.
 
 ---
 
-# Where is Alewife tax revenue? 💵
+# Alewife tax revenue? 💵
 
-### Alewife development has not caused a similar increase in revenue.
+### Alewife development has not generated in a similar increase in revenue.
 
-### Why not?
+### Why not? 🤷‍♂️
 
 #### [Tax Revenue Report](http://kentsj.com/FPRA/AlewifeTaxRevenue.html) shows increase in valuation and taxes over six years.
 
 Acquiring data for six years was difficult:
 
-- Changing data format - different data, different names
-- Missing data - residential exemption was supplied separately or not at all
-- Mangled data - data in the wrong columns required detective work and fixup
-- Auxiliary data - historical tax rates
+- Changing data format—different data, different names
+- Missing data—residential exemption was supplied separately or not at all
+- Mangled data—data in the wrong columns required fixup
+- Auxiliary data—historical tax rates
 
 ---
 
@@ -203,9 +233,14 @@ Data is pulled from the Open Data Portal as needed using the Socrata API.
 
 # Do you want more?
 
-### Really? 
+--
+&lt;h3&gt;Really?&lt;/h3&gt;
 
-### OK 😁
+---
+
+# Do you want more?
+
+### Really? &amp;nbsp; OK 😁
 
 #### [Cambridge Street Trees](http://kentsj.com/FPRA/Cambridge_Street_Trees.html)
 
@@ -217,7 +252,29 @@ Data is pulled from the Open Data Portal as needed using the Socrata API.
 
 ---
 
-# ❓Questions❓
+# Why R?
+
+[R](http://r-project.org) is a free software environment for statistical computing and graphics. It has
+
+- Excellent data analysis
+- Excellent static graphics
+- Some interactive graphics
+- Good geospatial support
+- Easy integration with Leaflet
+- Flexible, reproducible report generation with R Markdown
+- A world-class IDE ([RStudio](https://www.rstudio.com/products/rstudio/))
+
+.center[![R logo](https://www.r-project.org/Rlogo.png)]
+
+---
+
+# .center[❓Questions❓]
+
+### .center[[&lt;i class='fa fa-envelope-o'&gt;&lt;/i&gt; kent@kentsjohnson.com](mailto://kent@kentsjohnson.com)]
+
+### .center[[kentsj.com/Preso/Mapping_Civic_Data.html](http://kentsj.com/Preso/Mapping_Civic_Data.html)]
+
+### .center[[&lt;i class='fa fa-bitbucket'&gt;&lt;/i&gt; bitbucket.org/kent37/fpra](https://bitbucket.org/kent37/fpra)]
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create();
