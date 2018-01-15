@@ -36,7 +36,7 @@ Shows location of supporters, non-supporters, not reached, etc.
 
 Non-public data, sorry! `r emo::ji("man_facepalming")`
 
-![Canvassing map](CanvasMap.tiff)
+![Canvassing map](CanvasMap.png)
 ---
 
 # Cambridge Open Data portal launch `r emo::ji("rocket")`
